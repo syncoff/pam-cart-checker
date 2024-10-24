@@ -1,1 +1,3 @@
-console.log('Ciao pupah!');
+"use strict";
+const msg = 'ts babah!';
+console.log(msg);
