@@ -46,7 +46,7 @@ const onCartOpen = () => {
 
 const getMissingProducts = (scrollCart: Element) => {
     const requiredProducts: Product[] = [{ name: 'carletto' }];
-    const cartProds = [...scrollCart.querySelectorAll('.cart-prod-name a')].map(el => el.textContent?.toLowerCase()?.trim() ?? '');
+    const cartProds = [...Array.from(scrollCart.querySelectorAll('.cart-prod-name a'))].map(el => el.textContent?.toLowerCase()?.trim() ?? '');
 
     let missingProds: Product[] = [];
 
