@@ -2,10 +2,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: './scripts/index.tsx',
+  entry: {
+    popup: './scripts/index.tsx', // Popup react enty point
+    content: './scripts/content.ts' // Content script entry point
+  },
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: 'popup.js',
+    filename: '[name].js', // Generates popup.js and content.js
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
@@ -15,7 +18,12 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true
+          }
+        },
         exclude: /node_modules/,
       },
     ],
