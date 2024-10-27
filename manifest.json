@@ -15,7 +15,7 @@
     },
     "content_scripts": [
         {
-          "js": ["scripts/content.js"],
+          "js": ["public/content.js"],
           "matches": [
             "https://pamacasa.pampanorama.it/*"
           ]

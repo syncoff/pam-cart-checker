@@ -6,7 +6,7 @@ const App: React.FC = () => {
 
   return (
     <div onClick={() => setBobo('aaaa')}>
-      <h1>Supermarket Checker122</h1>
+      <h1>Supermarket Checker</h1>
       <p>Create your list of indispensable items! {bobo}</p>
     </div>
   );
