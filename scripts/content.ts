@@ -1,19 +1,13 @@
 const PAM_CART_CHECKER_ID = 'pam-cart-checker';
 
-type Product = {
-    name: string;
-};
-
-
-
 const cart = document.querySelector('#cart');
-if (cart) {    
-    cart.addEventListener('click', () => { 
-        onCartOpen();
+if (cart) {
+    cart.addEventListener('click', async () => {
+        await onCartOpen();
     });
 }
 
-const onCartOpen = () => {
+const onCartOpen = async () => {
     console.log('cart was opened!');
 
     const scrollCart = document.querySelector('.scroll-cart');
@@ -25,7 +19,7 @@ const onCartOpen = () => {
         }
 
         // get missing products list
-        const missingProds = getMissingProducts(scrollCart);
+        const missingProds = await getMissingProducts(scrollCart);
 
         // create new list container
         const div = document.createElement('div');
@@ -34,24 +28,36 @@ const onCartOpen = () => {
         div.style.color = '#fff';
         div.style.padding = '25px';
         if (missingProds.length) {
-            missingProds.map(prod => div.append('ATTENZIONE: ti manca ' + prod.name));
+            const p = document.createElement('p');
+            p.textContent = 'ATTENZIONE, i seguenti prodotti mancano nel tuo carrello:';
+            const ul = document.createElement('ul');
+            ul.style.padding = '0 20px';
+            missingProds.forEach(prod => {
+                const li = document.createElement('li');
+                li.textContent = prod;
+                ul.appendChild(li);
+            });
+            div.appendChild(p);
+            div.appendChild(ul);
         }
         else {
             div.append('TUTTO OK: non ti manca alcun prodotto importante nel tuo carrello!');
         }
-        
+
         scrollCart.prepend(div);
     }
 };
 
-const getMissingProducts = (scrollCart: Element) => {
-    const requiredProducts: Product[] = [{ name: 'carletto' }];
+const getMissingProducts = async (scrollCart: Element) => {
+    const data = await chrome.storage.sync.get(['productList']);
+    const requiredProducts: string[] = data.productList || [];
+
     const cartProds = [...Array.from(scrollCart.querySelectorAll('.cart-prod-name a'))].map(el => el.textContent?.toLowerCase()?.trim() ?? '');
 
-    let missingProds: Product[] = [];
+    let missingProds: string[] = [];
 
     for (const prod of requiredProducts) {
-        if (cartProds.find(cartProd => cartProd.includes(prod.name)) === undefined) {
+        if (cartProds.find(cartProd => cartProd.includes(prod.toLowerCase())) === undefined) {
             missingProds.push(prod);
         }
     }
