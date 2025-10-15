@@ -29,8 +29,8 @@ const App: React.FC = () => {
 
   return (
     <div style={{ width: '400px' }}>
-      <h1>Supermarket Checker</h1>
-      <p>Create your list of indispensable items!</p>
+      <h1>PAM cart checker</h1>
+      <p>Crea la tua lista di prodotti indispensabili!</p>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <input
           type="text"
