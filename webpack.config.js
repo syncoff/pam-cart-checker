@@ -9,6 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: '[name].js', // Generates popup.js and content.js
+    charset: 'utf-8'
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
@@ -26,6 +27,18 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'images/'
+            }
+          }
+        ]
+      }
     ],
   },
   mode: 'development',

@@ -8,13 +8,16 @@
     "@types/chrome": "^0.1.24",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "file-loader": "^6.2.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.6.3",
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@types/react-beautiful-dnd": "^13.1.8",
     "react": "^18.3.1",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.3.1"
   }
 }

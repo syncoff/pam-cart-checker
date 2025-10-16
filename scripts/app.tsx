@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import DragIndicator from '../images/drag_indicator.svg';
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<string[]>([]);
@@ -27,6 +29,48 @@ const App: React.FC = () => {
     chrome.storage.sync.set({ productList: updatedProducts });
   };
 
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const items = Array.from(products);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setProducts(items);
+    chrome.storage.sync.set({ productList: items });
+  };
+
+  const getProductEmoji = (productName: string) => {
+    const emojiMap: { [key: string]: string } = {
+      latte: '🥛',
+      uova: '🥚',
+      pane: '🍞',
+      formaggio: '🧀',
+      pollo: '🍗',
+      carne: '🥩',
+      mela: '🍎',
+      banana: '🍌',
+      arancia: '🍊',
+      caffè: '☕',
+      tè: '🍵',
+      biscotti: '🍪',
+      pasta: '🍝',
+      riso: '🍚',
+      cioccolato: '🍫',
+      acqua: '💧',
+    };
+
+    const lowerCaseProduct = productName.toLowerCase();
+    for (const key in emojiMap) {
+      if (lowerCaseProduct.includes(key)) {
+        return emojiMap[key];
+      }
+    }
+    return '🛒'; // Default emoji
+  };
+
   return (
     <div style={{ width: '400px' }}>
       <h1>PAM cart checker</h1>
@@ -43,25 +87,43 @@ const App: React.FC = () => {
           +
         </button>
       </div>
-      <ul style={{ padding: 0, marginTop: '10px' }}>
-        {products.map((product, index) => (
-          <li
-            key={index}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              background: index % 2 === 0 ? '#fafafa' : '#e8e8e8',
-              padding: '5px'
-            }}
-          >
-            <span>{product}</span>
-            <button onClick={() => deleteProduct(product)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2em' }}>
-              🗑️
-            </button>
-          </li>
-        ))}
-      </ul>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="products">
+          {(provided) => (
+            <ul {...provided.droppableProps} ref={provided.innerRef} style={{ padding: 0, marginTop: '10px' }}>
+              {products.map((product, index) => (
+                <Draggable key={product} draggableId={product} index={index}>
+                  {(provided) => (
+                    <li
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        background: index % 2 === 0 ? '#fafafa' : '#e8e8e8',
+                        padding: '5px',
+                        ...provided.draggableProps.style
+                      }}
+                    >
+                      <img src={DragIndicator} alt="drag handle" style={{ marginRight: '10px' }} />
+                      <span>{product}</span>
+                      <div>
+                        <span style={{ marginRight: '10px' }}>{getProductEmoji(product)}</span>
+                        <button onClick={() => deleteProduct(product)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2em' }}>
+                          🗑️
+                        </button>
+                      </div>
+                    </li>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 };
