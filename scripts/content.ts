@@ -1,3 +1,5 @@
+import Fuse from 'fuse.js';
+
 const PAM_CART_CHECKER_ID = 'pam-cart-checker';
 
 const cart = document.querySelector('#cart');
@@ -52,12 +54,20 @@ const getMissingProducts = async (scrollCart: Element) => {
     const data = await chrome.storage.sync.get(['productList']);
     const requiredProducts: string[] = data.productList || [];
 
-    const cartProds = [...Array.from(scrollCart.querySelectorAll('.cart-prod-name a'))].map(el => el.textContent?.toLowerCase()?.trim() ?? '');
+    const cartProds = [...Array.from(scrollCart.querySelectorAll('.cart-prod-name a'))].map(el => el.textContent?.trim() ?? '');
+
+    const fuse = new Fuse(cartProds, {
+        includeScore: true,
+        threshold: 0.4, // Matches decently well even with slightly different spellings or plurals
+        ignoreLocation: true // Search anywhere in the cart string
+    });
 
     let missingProds: string[] = [];
 
     for (const prod of requiredProducts) {
-        if (cartProds.find(cartProd => cartProd.includes(prod.toLowerCase())) === undefined) {
+        const results = fuse.search(prod);
+        // If we don't find any results with a decent score, it's missing
+        if (results.length === 0) {
             missingProds.push(prod);
         }
     }

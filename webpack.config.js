@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: '[name].js', // Generates popup.js and content.js
-    charset: 'utf-8'
+    charset: true
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
