@@ -2,22 +2,26 @@
   "name": "pam-cart-checker",
   "version": "0.0.1",
   "scripts": {
-    "watch": "webpack --watch",
+    "dev": "webpack --watch --mode development",
+    "build": "webpack --mode production",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.7",
     "@types/chrome": "^0.1.24",
     "@types/react": "^18.3.12",
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.3.1",
+    "css-loader": "^7.1.4",
     "file-loader": "^6.2.0",
+    "fork-ts-checker-webpack-plugin": "^9.1.0",
+    "style-loader": "^4.0.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.6.3",
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@types/react-beautiful-dnd": "^13.1.8",
     "fuse.js": "^7.1.0",
     "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
