@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import DragIndicator from '../images/drag_indicator.svg';
+import Fuse from 'fuse.js';
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<string[]>([]);
@@ -50,23 +51,42 @@ const App: React.FC = () => {
       formaggio: '🧀',
       pollo: '🍗',
       carne: '🥩',
+      pesce: '🐟',
       mela: '🍎',
       banana: '🍌',
       arancia: '🍊',
+      limone: '🍋',
+      fragola: '🍓',
+      pomodoro: '🍅',
+      patata: '🥔',
+      cipolla: '🧅',
+      carota: '🥕',
+      aglio: '🧄',
+      insalata: '🥗',
+      verdura: '🥦',
       caffè: '☕',
       tè: '🍵',
       biscotti: '🍪',
       pasta: '🍝',
       riso: '🍚',
+      pizza: '🍕',
       cioccolato: '🍫',
+      gelato: '🍨',
       acqua: '💧',
+      vino: '🍷',
+      birra: '🍺',
+      succo: '🧃',
+      burro: '🧈',
+      olio: '🫒',
+      sale: '🧂'
     };
 
-    const lowerCaseProduct = productName.toLowerCase();
-    for (const key in emojiMap) {
-      if (lowerCaseProduct.includes(key)) {
-        return emojiMap[key];
-      }
+    const emojiData = Object.keys(emojiMap).map(key => ({ itemName: key, emoji: emojiMap[key] }));
+    const fuse = new Fuse(emojiData, { keys: ['itemName'], threshold: 0.3 });
+    const result = fuse.search(productName);
+
+    if (result.length > 0) {
+      return result[0].item.emoji;
     }
     return '🛒'; // Default emoji
   };
