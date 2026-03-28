@@ -100,6 +100,11 @@ const App: React.FC = () => {
           type="text"
           value={newProduct}
           onChange={(e) => setNewProduct(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              addProduct();
+            }
+          }}
           placeholder="Add a new product"
           style={{ flexGrow: 1, marginRight: '10px' }}
         />
