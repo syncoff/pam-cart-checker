@@ -1,0 +1,31 @@
+{
+  "github": {
+    "release": true,
+    "releaseName": "v${version}",
+    "assets": ["pam-cart-checker-v${version}.zip"]
+  },
+  "git": {
+    "commitMessage": "chore: release v${version}",
+    "tagName": "v${version}"
+  },
+  "npm": {
+    "publish": false
+  },
+  "hooks": {
+    "before:init": ["npm run type-check"],
+    "after:bump": [
+      "node scripts/sync-manifest.js ${version}",
+      "npm run build",
+      "npx bestzip pam-cart-checker-v${version}.zip manifest.json public/ popup/ images/"
+    ],
+    "after:release": [
+      "echo Successfully fully released ${name} v${version} to GitHub."
+    ]
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "infile": "CHANGELOG.md",
+      "preset": "angular"
+    }
+  }
+}
