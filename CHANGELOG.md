@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.3.0](https://github.com/syncoff/pam-cart-checker/compare/v0.2.0...v0.3.0) (2026-03-28)
+
+
+### Features
+
+* implement product title edit ([9ba9140](https://github.com/syncoff/pam-cart-checker/commit/9ba9140563cb45a86187485aaa49059b210e9f2c))
+
 # [0.2.0](https://github.com/syncoff/pam-cart-checker/compare/v0.1.0...v0.2.0) (2026-03-28)
 
 
