@@ -2,12 +2,14 @@
     "manifest_version": 3,
     "name": "PAM cart checker",
     "description": "Never forget essential items when shopping at online supermarkets. Create a list of indispensable products, and the extension will alert you if any items are missing.",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "action": {
         "default_popup": "./popup/popup.html",
         "default_icon": "./images/foobar.png"
     },
-    "permissions": ["storage"],
+    "permissions": [
+        "storage"
+    ],
     "icons": {
         "16": "images/icon-16.png",
         "32": "images/icon-32.png",
@@ -16,10 +18,12 @@
     },
     "content_scripts": [
         {
-          "js": ["public/content.js"],
-          "matches": [
-            "https://pamacasa.pampanorama.it/*"
-          ]
+            "js": [
+                "public/content.js"
+            ],
+            "matches": [
+                "https://pamacasa.pampanorama.it/*"
+            ]
         }
-      ]
+    ]
 }
