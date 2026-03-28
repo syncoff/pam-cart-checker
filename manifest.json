@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "PAM cart checker",
     "description": "Never forget essential items when shopping at online supermarkets. Create a list of indispensable products, and the extension will alert you if any items are missing.",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "action": {
         "default_popup": "./popup/popup.html",
         "default_icon": "./images/foobar.png"

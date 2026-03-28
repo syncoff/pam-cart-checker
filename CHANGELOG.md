@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.2.0](https://github.com/syncoff/pam-cart-checker/compare/v0.1.0...v0.2.0) (2026-03-28)
+
+
+### Features
+
+* Add core cart checking logic, product list management UI, and dynamic product action buttons. ([0731449](https://github.com/syncoff/pam-cart-checker/commit/0731449a34eb0d169c1bce136fd199b6cedd3be2))
+
 # [0.1.0](https://github.com/syncoff/pam-cart-checker/compare/0.0.1...v0.1.0) (2026-03-28)
 
 
